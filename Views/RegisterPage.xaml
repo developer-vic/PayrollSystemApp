@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="PayrollSystemApp.Views.RegisterPage"
+             Title="RegisterPage">
+    <VerticalStackLayout>
+        <Grid Padding="20,0">
+            <Image Margin="-20,0" Source="login_circle_top" VerticalOptions="Start" HorizontalOptions="Start" />
+            <StackLayout>
+                <Label Text="Computerized Payroll System" Margin="20,30,0,0" FontSize="Medium" HorizontalOptions="Center" />
+                <Label Text="Registration" Margin="20,30,0,20" FontAttributes="Bold" FontSize="Large" />
+
+                <ScrollView>
+                    <StackLayout>
+                        <StackLayout Margin="20,0">
+                            <!--Name-->
+                            <Entry Placeholder="Your Full Name" Text="{Binding UserFullName}" Keyboard="Text"/>
+                            <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
+                            <!--Company Name-->
+                            <Entry Text="{Binding Organization}" Placeholder="Company Name" Keyboard="Text"/>
+                            <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
+                            <!--PhoneNumber-->
+                            <Entry Placeholder="Phone Number" Text="{Binding PhoneNumber}" Keyboard="Telephone"/>
+                            <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
+                            <!--Login Email-->
+                            <Entry Placeholder="Login Email" Text="{Binding EmailAddress}" Keyboard="Email"/>
+                            <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
+                            <!--Login Password-->
+                            <StackLayout Orientation="Horizontal">
+                                <Entry Text="{Binding Password}" Placeholder="Login Password" IsPassword="{Binding PasswordInputType}" HorizontalOptions="FillAndExpand"/>
+                                <ImageButton Source="{Binding PasswordToggleImage}" Command="{Binding MyCommand}" CommandParameter="toggle_pw" WidthRequest="30" BackgroundColor="White" HorizontalOptions="End" />
+                            </StackLayout>
+                            <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,30,20" HorizontalOptions="FillAndExpand" />
+                        </StackLayout>
+
+                        <ActivityIndicator IsVisible="{Binding ShowLoading}" IsRunning="{Binding ShowLoading}" 
+                                               VerticalOptions="Center" HorizontalOptions="Center" Color="#37256A"/>
+
+                        <!--buttom buttons-->
+                        <Button Margin="20,0,20,0" HeightRequest="60" Text="SIGN UP" CornerRadius="10" BackgroundColor="#37256A" VerticalOptions="EndAndExpand" x:Name="btnContinue" Command="{Binding MyCommand}" CommandParameter="sign_up" />
+                        
+                        <StackLayout Orientation="Horizontal" Margin="20,20,20,40" HorizontalOptions="CenterAndExpand">
+                            <Label Text="Already have an account?  " FontSize="12" TextColor="#37256A" />
+                            <Label Text="Sign In" FontSize="12" TextColor="#6E4AD3" FontAttributes="None" x:Name="SignInLabel">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding MyCommand}" CommandParameter="sign_in"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+            </StackLayout>
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>

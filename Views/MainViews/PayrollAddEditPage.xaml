@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PayrollSystemApp.Views.MainViews.PayrollAddEditPage"
+              Title="{Binding PageTitle}">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="20">
+                <!-- Payroll Form -->
+                <Label Text="Employee Name" FontSize="Medium"/>
+                <StackLayout Orientation="Horizontal" IsEnabled="{Binding FieldsEnabled}">
+                    <Picker x:Name="EmployeePicker" ItemsSource="{Binding Employees}" 
+                            ItemDisplayBinding="{Binding FullName}" Title="Select Employee" 
+                            SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}"
+                            VerticalOptions="Center" HorizontalOptions="FillAndExpand" />
+                    <ImageButton Source="arrow_dropdown" Command="{Binding PickerCommand}" CommandParameter="{x:Reference EmployeePicker}" VerticalOptions="Center" BackgroundColor="Transparent" WidthRequest="30" />
+                </StackLayout>
+                <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />    
+                
+                <Label Text="Basic Salary" FontSize="Medium"/>
+                <Entry x:Name="BasicSalaryEntry" Text="{Binding Payroll.BasicSalary}" 
+                       Placeholder="Enter basic salary" Keyboard="Numeric" IsEnabled="{Binding FieldsEnabled}"/>
+                <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
+
+                <Label Text="Overtime" FontSize="Medium"/>
+                <Entry x:Name="OvertimeEntry" Text="{Binding Payroll.Overtime}" 
+                       Placeholder="Enter overtime amount" Keyboard="Numeric" IsEnabled="{Binding FieldsEnabled}"/>
+                <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
+
+                <Label Text="Bonuses" FontSize="Medium"/>
+                <Entry x:Name="BonusesEntry" Text="{Binding Payroll.Bonuses}" 
+                       Placeholder="Enter bonuses" Keyboard="Numeric" IsEnabled="{Binding FieldsEnabled}"/>
+                <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
+
+                <Label Text="Deductions" FontSize="Medium"/>
+                <Entry x:Name="DeductionsEntry" Text="{Binding Payroll.Deductions}" 
+                       Placeholder="Enter deductions" Keyboard="Numeric" IsEnabled="{Binding FieldsEnabled}"/>
+                <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
+
+                <Label Text="Net Salary" FontSize="Medium"/>
+                <Entry x:Name="NetSalaryEntry" Text="{Binding Payroll.NetSalary}" IsEnabled="False" />
+                <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
+
+                <ActivityIndicator IsVisible="{Binding ShowLoading}" IsRunning="{Binding ShowLoading}" 
+       VerticalOptions="Center" HorizontalOptions="Center" Color="#37256A"/>
+
+                <Button Margin="20,0,20,0" HeightRequest="60" Text="Save" CornerRadius="10"  
+        IsVisible="{Binding FieldsEnabled}" 
+        BackgroundColor="#37256A" Command="{Binding MyCommand}" CommandParameter="save" />
+                
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

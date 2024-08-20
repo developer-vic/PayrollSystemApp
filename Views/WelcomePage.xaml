@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="PayrollSystemApp.Views.WelcomePage"
+             Title="WelcomePage">
+    <ScrollView VerticalScrollBarVisibility="Never">
+        <StackLayout Padding="10">
+            <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                <Image Source="logo" HorizontalOptions="CenterAndExpand" HeightRequest="80"/>
+                <Label Margin="20" FontAttributes="Bold" FontFamily="CommissionerFont" TextColor="Black"
+                            HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Design and Implementation of &#x0a;" FontSize="Default" />
+                            <Span Text="COMPUTERIZED PAYROLL SYSTEM &#x0a;&#x0a;" FontAttributes="Bold" FontSize="Medium"  />
+                            <Span Text="By: Odegbile Timilehin Theophilus  &#x0a;" FontSize="Default" />
+                            <Span Text="CS/HND/F22/3347 &#x0a;&#x0a;" FontAttributes="Bold" FontSize="Medium"  />
+                            <Span Text="Supervise by: Dr.(MRS) F.A TAOFEEK-IBRAHIM"  FontSize="Default" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Button Margin="20,0" HeightRequest="60" Text="LOGIN" CornerRadius="10" BackgroundColor="#37256A" 
+                        FontSize="Default" FontAttributes="Bold" VerticalOptions="Center" Clicked="btnLogin_Clicked" />
+                <Button Margin="20" HeightRequest="60" TextColor="#37256A" Text="REGISTER" CornerRadius="10"
+                        FontSize="Default" FontAttributes="Bold" BackgroundColor="Transparent" BorderColor="#37256A" 
+                        BorderWidth="1" VerticalOptions="Center" Clicked="btnRegister_Clicked" />
+            </StackLayout>
+
+            <Label HorizontalOptions="EndAndExpand" VerticalOptions="End">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                </Label.GestureRecognizers>
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Powered by: " TextColor="#6E4AD3" />
+                        <Span Text="programmergwin.com" TextColor="Blue" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

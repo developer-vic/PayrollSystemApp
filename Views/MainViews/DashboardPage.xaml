@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#E9E9E9"
+             x:Class="PayrollSystemApp.Views.MainViews.DashboardPage"
+             Title="DashboardPage">
+    <ScrollView VerticalScrollBarVisibility="Never">
+        <StackLayout Padding="20,20,20,5">
+            <HorizontalStackLayout HorizontalOptions="Center" >
+                <Image Source="logo" WidthRequest="30" Margin="10,0" />
+                <Label Text="Computerized Payroll System" FontSize="Medium" FontAttributes="Bold" TextColor="#6E4AD3" />
+            </HorizontalStackLayout>
+            <Label Text="By: CS/HND/F22/3320" FontSize="Small" HorizontalOptions="Center" FontAttributes="Bold" />
+
+            <ActivityIndicator IsVisible="{Binding ShowLoading}" IsRunning="{Binding ShowLoading}" 
+                VerticalOptions="Center" HorizontalOptions="Center" Color="#37256A"/>
+            
+            <Grid Margin="0,30,0,0">
+                <Image Source="dash_banner" Aspect="AspectFill" HorizontalOptions="FillAndExpand" Margin="-10" />
+                <VerticalStackLayout Padding="10,0,10,10" Spacing="20">
+                    <Grid RowDefinitions="auto,auto,auto" ColumnDefinitions="auto,*">
+                        <Label Grid.Row="0" Grid.Column="0" Text="{Binding UserType}" FontSize="18" FontAttributes="Bold" TextColor="White" />
+                        <Label Grid.Row="1" Grid.Column="0" Text="{Binding UserFullName}" FontSize="Default" TextColor="White"/>
+                        <Label Grid.Row="2" Grid.Column="0" Text="{Binding UserEmail}" FontSize="Default" TextColor="White"/>
+                        <Frame Grid.RowSpan="3" Grid.Column="1" HorizontalOptions="End" HasShadow="True" Padding="0" VerticalOptions="Center">
+                            <ImageButton Source="logout" WidthRequest="50" HeightRequest="50" Command="{Binding MyCommand}" CommandParameter="logout" />
+                        </Frame>
+                    </Grid>
+                    <Grid RowDefinitions="*" ColumnDefinitions="*,*" ColumnSpacing="20">
+                        <Frame Grid.Column="0" HasShadow="True" Padding="10">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding EmployeesTotal}" FontSize="18" FontAttributes="Bold" TextColor="#6E4AD3" />
+                                <Label Text="Employees" FontSize="Default" />
+                            </VerticalStackLayout>
+                        </Frame>
+                        <Frame Grid.Column="1" HasShadow="True" IsVisible="{Binding IsWriter}" Padding="10">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding PayrollsTotal}" FontSize="18" FontAttributes="Bold" TextColor="#6E4AD3" />
+                                <Label Text="All Payrolls" FontSize="Default" />
+                            </VerticalStackLayout>
+                        </Frame>
+                        <Frame Grid.Column="1" HasShadow="True" IsVisible="{Binding IsNotWriter}" Padding="10">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding PayrollsTotal}" FontSize="18" FontAttributes="Bold" TextColor="#6E4AD3" />
+                                <Label Text="My Payroll" FontSize="Default" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </Grid>
+                </VerticalStackLayout>
+            </Grid>
+
+            <Label Text="Choose the operation you want to perform below:" FontSize="12" FontAttributes="Bold" 
+                   HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" Margin="0,20"/>
+
+            <Grid RowDefinitions="auto,auto" ColumnDefinitions="*,*" ColumnSpacing="20" RowSpacing="20">
+                <Frame Grid.Row="0" Grid.Column="0" HasShadow="True" Padding="10" IsVisible="{Binding IsWriter}">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding MyCommand}" CommandParameter="employee"/>
+                    </Frame.GestureRecognizers>
+                    <VerticalStackLayout>
+                        <Image Source="employee" WidthRequest="50" Margin="0,0,0,10"/>
+                        <Label Text="Employee &#x0a; Management" FontSize="14" FontAttributes="Bold" TextColor="#6E4AD3" HorizontalTextAlignment="Center" /> 
+                    </VerticalStackLayout>
+                </Frame>
+                <Frame Grid.Row="0" Grid.Column="1" HasShadow="True" Padding="10" IsVisible="{Binding IsWriter}">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding MyCommand}" CommandParameter="payroll"/>
+                    </Frame.GestureRecognizers>
+                    <VerticalStackLayout>
+                        <Image Source="payroll" WidthRequest="50" Margin="0,0,0,10"/>
+                        <Label Text="Payroll &#x0a; Management" FontSize="14" FontAttributes="Bold" TextColor="#6E4AD3" HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Frame Grid.Row="0" Grid.Column="0" HasShadow="True" Padding="10" IsVisible="{Binding IsNotWriter}">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding MyCommand}" CommandParameter="employed"/>
+                    </Frame.GestureRecognizers>
+                    <VerticalStackLayout>
+                        <Image Source="employed" WidthRequest="50" Margin="0,0,0,10"/>
+                        <Label Text="My &#x0a; Profile" FontSize="14" FontAttributes="Bold" TextColor="#6E4AD3" HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </Frame>
+                <Frame Grid.Row="0" Grid.Column="1" HasShadow="True" Padding="10" IsVisible="{Binding IsNotWriter}">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding MyCommand}" CommandParameter="my_payroll"/>
+                    </Frame.GestureRecognizers>
+                    <VerticalStackLayout>
+                        <Image Source="payroll" WidthRequest="50" Margin="0,0,0,10"/>
+                        <Label Text="My &#x0a; Payroll" FontSize="14" FontAttributes="Bold" TextColor="#6E4AD3" HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Frame Grid.Row="1" Grid.Column="0" HasShadow="True" Padding="10">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding MyCommand}" CommandParameter="reports"/>
+                    </Frame.GestureRecognizers>
+                    <VerticalStackLayout>
+                        <Image Source="report" WidthRequest="50" Margin="0,0,0,10"/>
+                        <Label Text="Report &#x0a; Management" FontSize="14" FontAttributes="Bold" TextColor="#6E4AD3" HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+                <Frame Grid.Row="1" Grid.Column="1" HasShadow="True" Padding="10">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding MyCommand}" CommandParameter="logout"/>
+                    </Frame.GestureRecognizers>
+                    <VerticalStackLayout>
+                        <Image Source="logout" WidthRequest="50" Margin="0,0,0,10"/>
+                        <Label Text="Log Out" FontSize="14" FontAttributes="Bold" TextColor="DarkRed" HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+            </Grid>
+             
+
+            <Label HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding MyCommand}" CommandParameter="gwin" />
+                </Label.GestureRecognizers>
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Powered by: " TextColor="#6E4AD3" />
+                        <Span Text="programmergwin.com" TextColor="Blue" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>

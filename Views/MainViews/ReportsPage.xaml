@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PayrollSystemApp.Views.MainViews.ReportsPage"
+             Title="Reports">
+    <StackLayout Padding="20"> 
+        <ActivityIndicator IsVisible="{Binding ShowLoading}" IsRunning="{Binding ShowLoading}" 
+             HorizontalOptions="Center" Color="#37256A"/>
+        
+        <Label Text="{Binding TotalPayroll}" FontSize="Small" HorizontalOptions="Center" FontAttributes="Bold" Margin="0,5" />
+          
+        <CollectionView x:Name="colReports" ItemsSource="{Binding Reports}" 
+                        SelectedItem="{Binding SelectedPayroll, Mode=TwoWay}">
+            <CollectionView.EmptyView>
+                <Label Text="No Payrolls Available" HorizontalOptions="Center" Margin="10" />
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,10" BackgroundColor="#E2DBF6" CornerRadius="12" Padding="10,5" HasShadow="False">
+                        <Grid RowDefinitions="auto,auto,auto,auto" ColumnDefinitions="*,*">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                            </Grid.GestureRecognizers>
+                            
+                            <Label Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding Employee.FullName}" 
+                                   TextColor="#6E4AD3" FontAttributes="Bold" FontSize="Default" /> 
+                            <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Employee.Position}" 
+                                   TextColor="#6E4AD3" FontAttributes="Bold" FontSize="Default" /> 
+                            
+                            <Label Grid.Row="2" Grid.Column="0" TextColor="#644F28" FontSize="Small">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Salary: "/>
+                                        <Span Text="{Binding BasicSalary, StringFormat='{0:N2}'}" FontAttributes="Bold"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label> 
+                            <Label Grid.Row="2" Grid.Column="1" TextColor="#644F28" FontSize="Small">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Extras: "/>
+                                        <Span Text="{Binding Extras, StringFormat='{0:N2}'}" FontAttributes="Bold"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            
+                            <Label Grid.Row="3" Grid.Column="0" TextColor="#644F28" FontSize="Small">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Deductions: "/>
+                                        <Span Text="{Binding Deductions, StringFormat='{0:N2}'}" FontAttributes="Bold"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Grid.Row="3" Grid.Column="1" TextColor="#644F28" FontSize="Small">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Net Salary: "/>
+                                        <Span Text="{Binding NetSalary, StringFormat='{0:N2}'}" TextColor="#6E4AD3" FontAttributes="Bold"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label> 
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <StackLayout VerticalOptions="EndAndExpand">
+            <Label Text="{Binding TotalSalary}" FontSize="Small" HorizontalOptions="End" FontAttributes="Bold" Margin="0,5" />
+            <Label Text="{Binding TotalExtra}" FontSize="Small" HorizontalOptions="End" FontAttributes="Bold" />
+            <Label Text="{Binding TotalDeduction}" FontSize="Small" HorizontalOptions="End" FontAttributes="Bold" Margin="0,5"  />
+            <Label Text="{Binding TotalNetSalary}" FontSize="Medium" HorizontalOptions="End" FontAttributes="Bold" TextColor="#6E4AD3"  />
+
+            <!--<Button ImageSource="download" BackgroundColor="White" BorderWidth="1" BorderColor="#6E4AD3" 
+            CornerRadius="10" Text="Download Report" TextColor="#6E4AD3" FontAttributes="Bold" 
+            FontSize="16" Command="{Binding MyCommand}" CommandParameter="download" Margin="0,10"/>-->
+            
+        </StackLayout>
+
+    </StackLayout>
+</ContentPage>

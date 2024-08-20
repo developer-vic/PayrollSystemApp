@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             BackgroundColor="#E9E9E9"
+             x:Class="PayrollSystemApp.Views.MainViews.EmployeeListPage"
+             Title="Employees">
+    <VerticalStackLayout Padding="20">
+        
+        <Button ImageSource="add_icon" BackgroundColor="White" BorderWidth="1" BorderColor="#6E4AD3" 
+                CornerRadius="10" Text="Add New Employee" TextColor="#6E4AD3" FontAttributes="Bold" 
+                FontSize="16" Command="{Binding MyCommand}" CommandParameter="add" />
+
+        <Label Text="{Binding TotalEmployee}" FontSize="Medium" HorizontalOptions="Center" FontAttributes="Bold" Margin="0,10" />
+        <ActivityIndicator IsVisible="{Binding ShowLoading}" IsRunning="{Binding ShowLoading}" 
+                VerticalOptions="Center" HorizontalOptions="Center" Color="#37256A"/>
+
+        <CollectionView x:Name="colEmployeeList" ItemsSource="{Binding EmployeeList}" 
+                            SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}" VerticalOptions="FillAndExpand">
+            <CollectionView.EmptyView>
+                <Label Text="No Employees Available" HorizontalOptions="Center" Margin="10" /> 
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,10" BackgroundColor="#E2DBF6" CornerRadius="12" Padding="10,5" HasShadow="False">
+                        <Grid RowDefinitions="auto,auto" ColumnDefinitions="*,auto">
+                            <HorizontalStackLayout Grid.Column="0" Padding="10,5">
+                                <HorizontalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                                </HorizontalStackLayout.GestureRecognizers>
+                                <Image Source="employed" WidthRequest="50" HeightRequest="50" Margin="-10" Aspect="AspectFit" />
+                                <BoxView WidthRequest=".5" VerticalOptions="FillAndExpand" Color="#684C18" Margin="15,0,10,0"/>
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding FullName}" TextColor="#6E4AD3" FontAttributes="Bold" FontSize="Default" />
+                                    <Label Text="{Binding Email}" MaximumWidthRequest="200" LineBreakMode="TailTruncation" TextColor="#644F28" FontSize="Small" />
+                                </VerticalStackLayout> 
+                            </HorizontalStackLayout> 
+                            <VerticalStackLayout Grid.Column="1" Spacing="10" VerticalOptions="Center" HorizontalOptions="EndAndExpand">
+                                <ImageButton Source="edit" HorizontalOptions="Center" VerticalOptions="Center" 
+                                                 WidthRequest="30" HeightRequest="20" Clicked="EditImageButton_Clicked"/>
+                                <ImageButton Source="delete" HorizontalOptions="Center" VerticalOptions="Center" 
+                                                 WidthRequest="30" HeightRequest="20" Clicked="DeleteImageButton_Clicked"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        
+    </VerticalStackLayout>
+</ContentPage>

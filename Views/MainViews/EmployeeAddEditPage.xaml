@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PayrollSystemApp.Views.MainViews.EmployeeAddEditPage"
+              Title="{Binding PageTitle}">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="20">
+                <!-- Employee Form -->
+                <Label Text="Full Name" FontSize="Medium"/>
+                <Entry Text="{Binding Employee.FullName}" Placeholder="Enter full name"
+                       IsEnabled="{Binding FieldsEnabled}"/>
+                <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
+
+                <Label Text="Phone Number" FontSize="Medium"/>
+                <Entry Text="{Binding Employee.Phone}" Placeholder="Enter phone number" Keyboard="Telephone"
+                       IsEnabled="{Binding FieldsEnabled}"/>
+                <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
+
+                <!--<Label Text="Salary" FontSize="Medium"/>
+                <Entry Text="{Binding Employee.Salary}" Placeholder="Enter salary" Keyboard="Numeric"
+                       IsEnabled="{Binding FieldsEnabled}"/>
+                <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />-->
+
+                <Label Text="Position" FontSize="Medium"/>
+                <Entry Text="{Binding Employee.Position}" Placeholder="Enter position" 
+                       IsEnabled="{Binding FieldsEnabled}"/>
+                <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
+
+                <Label Text="Login Email" FontSize="Medium"/>
+                <Entry Text="{Binding Employee.Email}" Placeholder="Enter Login email" Keyboard="Email" 
+                       IsEnabled="{Binding EmailEnabled}"/>
+                <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
+                
+                <Label Text="Login Password" FontSize="Medium"/>
+                <StackLayout Orientation="Horizontal">
+                    <Entry Text="{Binding Employee.Password}" Placeholder="Enter Login Password" 
+                           IsEnabled="{Binding FieldsEnabled}" IsPassword="{Binding PasswordInputType}" HorizontalOptions="FillAndExpand"/>
+                    <ImageButton Source="{Binding PasswordToggleImage}" Command="{Binding MyCommand}" CommandParameter="toggle_pw" WidthRequest="30" BackgroundColor="White" HorizontalOptions="End" />
+                </StackLayout>
+                <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,30,20" HorizontalOptions="FillAndExpand" />
+                
+                <ActivityIndicator IsVisible="{Binding ShowLoading}" IsRunning="{Binding ShowLoading}" 
+                       VerticalOptions="Center" HorizontalOptions="Center" Color="#37256A"/>
+
+                <Button Margin="20,0,20,0" HeightRequest="60" Text="Save" CornerRadius="10"  
+                        IsVisible="{Binding FieldsEnabled}" 
+                        BackgroundColor="#37256A" Command="{Binding MyCommand}" CommandParameter="save" />
+                 
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
