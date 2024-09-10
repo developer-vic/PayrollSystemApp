@@ -2,16 +2,16 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              NavigationPage.HasNavigationBar="False"
-             BackgroundColor="#E9E9E9"
+             BackgroundColor="White" 
              x:Class="PayrollSystemApp.Views.MainViews.DashboardPage"
              Title="DashboardPage">
     <ScrollView VerticalScrollBarVisibility="Never">
         <StackLayout Padding="20,20,20,5">
             <HorizontalStackLayout HorizontalOptions="Center" >
                 <Image Source="logo" WidthRequest="30" Margin="10,0" />
-                <Label Text="Computerized Payroll System" FontSize="Medium" FontAttributes="Bold" TextColor="#6E4AD3" />
+                <Label Text="Computerized Payroll System" FontSize="Large" FontAttributes="Bold" TextColor="#6E4AD3" VerticalOptions="Center"/>
             </HorizontalStackLayout>
-            <Label Text="By: CS/HND/F22/3320" FontSize="Small" HorizontalOptions="Center" FontAttributes="Bold" />
+            <Label Text="By: CS/HND/F22/3347" FontSize="Small" HorizontalOptions="Center" FontAttributes="Bold" />
 
             <ActivityIndicator IsVisible="{Binding ShowLoading}" IsRunning="{Binding ShowLoading}" 
                 VerticalOptions="Center" HorizontalOptions="Center" Color="#37256A"/>

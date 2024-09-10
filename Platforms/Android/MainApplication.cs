@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Runtime;
+using AndroidX.AppCompat.App;
 using Microsoft.Maui.Controls.Compatibility.Platform.Android;
 
 namespace PayrollSystemApp
@@ -10,6 +11,7 @@ namespace PayrollSystemApp
         public MainApplication(IntPtr handle, JniHandleOwnership ownership)
             : base(handle, ownership)
         {
+            AppCompatDelegate.DefaultNightMode = AppCompatDelegate.ModeNightNo;
         }
         protected override MauiApp CreateMauiApp()
         {

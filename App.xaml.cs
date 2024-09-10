@@ -8,6 +8,10 @@ namespace PayrollSystemApp
         public App()
         {
             InitializeComponent();
+
+            if (Application.Current != null)
+                Application.Current.UserAppTheme = AppTheme.Light;
+
             MainPage = new Views.WelcomePage();
 
             //string admin = "{\"UserId\":\"20240820043551095\",\"UserType\":\"Employer\",\"FullName\":\"Vic\",\"Email\":\"babsgodwin @gmail.com\",\"Phone\":\"0809656\",\"Password\":\"vic\",\"Organization\":\"Gwin\",\"isAdmin\":false}";

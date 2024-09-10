@@ -2,15 +2,21 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              NavigationPage.HasNavigationBar="False"
+             BackgroundColor="White"
              x:Class="PayrollSystemApp.Views.RegisterPage"
              Title="RegisterPage">
     <VerticalStackLayout>
         <Grid Padding="20,0">
             <Image Margin="-20,0" Source="login_circle_top" VerticalOptions="Start" HorizontalOptions="Start" />
             <StackLayout>
-                <Label Text="Computerized Payroll System" Margin="20,30,0,0" FontSize="Medium" HorizontalOptions="Center" />
-                <Label Text="Registration" Margin="20,30,0,20" FontAttributes="Bold" FontSize="Large" />
+                
+                <HorizontalStackLayout HorizontalOptions="Center"  Margin="20,30,0,0">
+                    <Image Source="logo" WidthRequest="30" Margin="10,0" />
+                    <Label Text="Computerized Payroll System" FontSize="Large" FontAttributes="Bold" TextColor="#6E4AD3" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+                <Label Text="By: CS/HND/F22/3347" FontSize="Small" HorizontalOptions="Center" FontAttributes="Bold" />
 
+                <Label Text="Registration" Margin="20,30,0,20" FontAttributes="Bold" FontSize="Medium" />
                 <ScrollView>
                     <StackLayout>
                         <StackLayout Margin="20,0">
