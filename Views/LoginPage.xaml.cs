@@ -68,6 +68,7 @@ public partial class LoginPage : ContentPage
                 ShowLoading = true;
                 bool regSuccess = await VUtils.LoginUser(EmailAddress, Password);
                 if (regSuccess) VUtils.GetoPage(new MainViews.DashboardPage(), true);
+                else VUtils.ToastText("Incorrect Email or Password");
                 ShowLoading = false;
             }
         }

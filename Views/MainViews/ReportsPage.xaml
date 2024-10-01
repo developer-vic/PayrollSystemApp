@@ -3,16 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PayrollSystemApp.Views.MainViews.ReportsPage"
              Title="Reports">
-    <StackLayout Padding="20"> 
-        <ActivityIndicator IsVisible="{Binding ShowLoading}" IsRunning="{Binding ShowLoading}" 
-             HorizontalOptions="Center" Color="#37256A"/>
+    <StackLayout Padding="20">
+        <!-- Month and Year Picker -->
+        <Label Text="Select Month" FontSize="Default" FontAttributes="Bold" />
+        <Picker x:Name="MonthPicker" Title="Select Month" ItemsSource="{Binding Months}" SelectedIndexChanged="OnMonthSelected"/>
+        <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
+
+        <Label Text="Select Year" FontSize="Default" FontAttributes="Bold" />
+        <Picker x:Name="YearPicker" Title="Select Year" ItemsSource="{Binding Years}" SelectedIndexChanged="OnYearSelected"/>
+        <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
         
-        <Label Text="{Binding TotalPayroll}" FontSize="Small" HorizontalOptions="Center" FontAttributes="Bold" Margin="0,5" />
-          
+        <ActivityIndicator IsVisible="{Binding ShowLoading}" IsRunning="{Binding ShowLoading}" 
+             HorizontalOptions="Center" Color="#37256A"/>   
+        <Button Margin="20,0,20,0" HeightRequest="60" Text="Generate Report for Selected Month" 
+                        CornerRadius="10" IsEnabled="{Binding FieldsEnabled}" 
+                        BackgroundColor="#37256A" Command="{Binding MyCommand}" CommandParameter="generate" />
+
+        
+        <Label Text="{Binding TotalPayroll}" FontSize="Small" HorizontalOptions="Center" FontAttributes="Bold" Margin="0,5" /> 
         <CollectionView x:Name="colReports" ItemsSource="{Binding Reports}" 
                         SelectedItem="{Binding SelectedPayroll, Mode=TwoWay}">
             <CollectionView.EmptyView>
-                <Label Text="No Payrolls Available" HorizontalOptions="Center" Margin="10" />
+                <Label Text="No Report Available" HorizontalOptions="Center" Margin="10" />
             </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -22,9 +34,9 @@
                                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
                             </Grid.GestureRecognizers>
                             
-                            <Label Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding Employee.FullName}" 
+                            <Label Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding FullName}" 
                                    TextColor="#6E4AD3" FontAttributes="Bold" FontSize="Default" /> 
-                            <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Employee.Position}" 
+                            <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Position}" 
                                    TextColor="#6E4AD3" FontAttributes="Bold" FontSize="Default" /> 
                             
                             <Label Grid.Row="2" Grid.Column="0" TextColor="#644F28" FontSize="Small">

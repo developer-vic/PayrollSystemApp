@@ -44,7 +44,7 @@ public partial class DashboardPage : ContentPage
 
         private async void InitializeData()
         {  
-            _PayrollList = await VUtils.GetPayrollList();  
+            _PayrollList = await VUtils.GetAllPayrollList();  
             PayrollsTotal = _PayrollList.Count();
             _UserList = await VUtils.GetEmployeeList();
             EmployeesTotal = _UserList.Count();
@@ -73,9 +73,10 @@ public partial class DashboardPage : ContentPage
                         VUtils.GetoPage(new PayrollListPage());
                         break;
                     case "my_payroll":
-                        var myPayroll = _PayrollList.Where(p => p.Employee.UserId == VUtils.LoggedInUser.UserId).FirstOrDefault();
-                        if (myPayroll != null) VUtils.GetoPage(new PayrollAddEditPage(myPayroll, _UserList, true));
-                        else VUtils.ToastText("No Payroll Available for You");
+                        //var myPayroll = _PayrollList.Where(p => p.Employee.UserId == VUtils.LoggedInUser.UserId).FirstOrDefault();
+                        //if (myPayroll != null) VUtils.GetoPage(new PayrollAddEditPage(myPayroll, _UserList, true));
+                        //else VUtils.ToastText("No Payroll Available for You");
+                        VUtils.GetoPage(new PayrollListPage());
                         break;
                     case "reports":
                         VUtils.GetoPage(new ReportsPage()); 

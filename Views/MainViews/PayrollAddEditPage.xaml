@@ -3,52 +3,45 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PayrollSystemApp.Views.MainViews.PayrollAddEditPage"
               Title="{Binding PageTitle}">
-    <ContentPage.Content>
-        <ScrollView>
+    <ContentPage.Content> 
             <StackLayout Padding="20">
-                <!-- Payroll Form -->
-                <Label Text="Employee Name" FontSize="Medium"/>
-                <StackLayout Orientation="Horizontal" IsEnabled="{Binding FieldsEnabled}">
-                    <Picker x:Name="EmployeePicker" ItemsSource="{Binding Employees}" 
-                            ItemDisplayBinding="{Binding FullName}" Title="Select Employee" 
-                            SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}"
-                            VerticalOptions="Center" HorizontalOptions="FillAndExpand" />
-                    <ImageButton Source="arrow_dropdown" Command="{Binding PickerCommand}" CommandParameter="{x:Reference EmployeePicker}" VerticalOptions="Center" BackgroundColor="Transparent" WidthRequest="30" />
-                </StackLayout>
-                <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />    
-                
-                <Label Text="Basic Salary" FontSize="Medium"/>
-                <Entry x:Name="BasicSalaryEntry" Text="{Binding Payroll.BasicSalary}" 
-                       Placeholder="Enter basic salary" Keyboard="Numeric" IsEnabled="{Binding FieldsEnabled}"/>
-                <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
+                <!-- Payroll Form --> 
 
-                <Label Text="Overtime" FontSize="Medium"/>
-                <Entry x:Name="OvertimeEntry" Text="{Binding Payroll.Overtime}" 
-                       Placeholder="Enter overtime amount" Keyboard="Numeric" IsEnabled="{Binding FieldsEnabled}"/>
-                <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
+                <!-- Month and Year Picker -->
+            <Label Text="Select Month" FontSize="Default" FontAttributes="Bold" IsVisible="{Binding FieldsEnabled}" />
+            <Picker x:Name="MonthPicker" Title="Select Month" ItemsSource="{Binding Months}" SelectedIndexChanged="OnMonthSelected" IsVisible="{Binding FieldsEnabled}"/>
+            <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" IsVisible="{Binding FieldsEnabled}" />
 
-                <Label Text="Bonuses" FontSize="Medium"/>
-                <Entry x:Name="BonusesEntry" Text="{Binding Payroll.Bonuses}" 
-                       Placeholder="Enter bonuses" Keyboard="Numeric" IsEnabled="{Binding FieldsEnabled}"/>
-                <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
+            <Label Text="Select Year" FontSize="Default" FontAttributes="Bold" IsVisible="{Binding FieldsEnabled}" />
+            <Picker x:Name="YearPicker" Title="Select Year" ItemsSource="{Binding Years}" SelectedIndexChanged="OnYearSelected" IsVisible="{Binding FieldsEnabled}"/>
+            <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" IsVisible="{Binding FieldsEnabled}" />
 
-                <Label Text="Deductions" FontSize="Medium"/>
-                <Entry x:Name="DeductionsEntry" Text="{Binding Payroll.Deductions}" 
-                       Placeholder="Enter deductions" Keyboard="Numeric" IsEnabled="{Binding FieldsEnabled}"/>
-                <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
+                <!-- Payroll ListView -->
+                <CollectionView x:Name="PayrollListView" ItemsSource="{Binding FilteredPayrolls}">
+                    <CollectionView.EmptyView>
+                        <Label Text="No Payrolls Available" HorizontalOptions="Center" Margin="10" />
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Margin="0,10" BackgroundColor="#E2DBF6" CornerRadius="12" Padding="10,5" HasShadow="False">
+                                <Grid RowDefinitions="auto,auto" ColumnDefinitions="auto,*"> 
+                                    <Label Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding FullName}" FontSize="Medium" FontAttributes="Bold" /> 
+                                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding Position}" /> 
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding NetSalary, StringFormat='{0:N2}'}" TextColor="#644F28" FontSize="Small" /> 
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
-                <Label Text="Net Salary" FontSize="Medium"/>
-                <Entry x:Name="NetSalaryEntry" Text="{Binding Payroll.NetSalary}" IsEnabled="False" />
-                <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
-
+                <!-- Generate Payroll Button --> 
                 <ActivityIndicator IsVisible="{Binding ShowLoading}" IsRunning="{Binding ShowLoading}" 
-       VerticalOptions="Center" HorizontalOptions="Center" Color="#37256A"/>
+                                   VerticalOptions="Center" HorizontalOptions="Center" Color="#37256A"/>
 
-                <Button Margin="20,0,20,0" HeightRequest="60" Text="Save" CornerRadius="10"  
-        IsVisible="{Binding FieldsEnabled}" 
-        BackgroundColor="#37256A" Command="{Binding MyCommand}" CommandParameter="save" />
+                <Button Margin="20,0,20,0" HeightRequest="60" Text="Generate Payroll for Selected Month" 
+                        CornerRadius="10" IsVisible="{Binding FieldsEnabled}" 
+                        BackgroundColor="#37256A" Command="{Binding MyCommand}" CommandParameter="save" />
                 
-            </StackLayout>
-        </ScrollView>
+            </StackLayout> 
     </ContentPage.Content>
 </ContentPage>

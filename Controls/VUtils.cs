@@ -87,8 +87,8 @@ namespace PayrollSystemApp
 
         //DATABASE 
         internal static UserModel LoggedInUser = new UserModel();
-        static readonly string USER_DB_CACHE_KEY = "PayrollSavedUserList";
-        static readonly string PAYROLL_DB_CACHE_KEY = "PayrollSavedPayrollList"; 
+        internal static readonly string USER_DB_CACHE_KEY = "PayrollSavedUserList";
+        internal static readonly string PAYROLL_DB_CACHE_KEY = "PayrollSavedPayrollList"; 
         private static HttpClient GetVHttpClient()
         {
             var httpClientHandler = new HttpClientHandler();
@@ -112,22 +112,25 @@ namespace PayrollSystemApp
             try
             {
                 if (Connectivity.NetworkAccess != NetworkAccess.Internet) return "";
-                using (var mclient = GetVHttpClient())
-                {
-                    string url = "https://programmergwin.com" + actionname;
-                    if (!string.IsNullOrEmpty(key)) url += "?key=" + key;
-                    if (!string.IsNullOrEmpty(value)) url += "&value=" + value;
 
-                    mclient.Timeout = TimeSpan.FromMinutes(1);
-                    using (var request = new HttpRequestMessage(new HttpMethod("POST"), url))
-                    {
-                        var response = await mclient.SendAsync(request);
-                        if (response.IsSuccessStatusCode)
-                            return await response.Content.ReadAsStringAsync();
-                        else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
-                            return "";
-                    }
-                }
+                return await new FirebaseClass().GetResponse(actionname, key, value);
+
+                //using (var mclient = GetVHttpClient())
+                //{
+                //    string url = "https://programmergwin.com" + actionname;
+                //    if (!string.IsNullOrEmpty(key)) url += "?key=" + key;
+                //    if (!string.IsNullOrEmpty(value)) url += "&value=" + value;
+
+                //    mclient.Timeout = TimeSpan.FromMinutes(1);
+                //    using (var request = new HttpRequestMessage(new HttpMethod("POST"), url))
+                //    {
+                //        var response = await mclient.SendAsync(request);
+                //        if (response.IsSuccessStatusCode)
+                //            return await response.Content.ReadAsStringAsync();
+                //        else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                //            return "";
+                //    }
+                //}
             }
             catch (Exception) { }
             return "";
@@ -162,12 +165,17 @@ namespace PayrollSystemApp
                 if (exitUserEmail != null)
                 {
                     if (!isNew) UserList.Remove(exitUserEmail);
-                    else { ShowMessage("Email Already Exist"); return false;  } 
+                    else { ShowMessage("Email Already Exist"); return false; } 
                 } 
                 UserList.Add(newUser); string newMrawList = JsonConvert.SerializeObject(UserList);
                 await PostRequest("/noteTakerSet", USER_DB_CACHE_KEY, newMrawList);
-                ShowMessage("Record Updated Successful");
-                if (isRegPage) LoggedInUser = newUser;  return true;
+                if (isRegPage)
+                {
+                    ShowMessage("Registration Successful");
+                    LoggedInUser = newUser;
+                }
+                else ShowMessage("Record Updated Successful");
+                return true;
             }
             catch (Exception)
             {
@@ -234,34 +242,25 @@ namespace PayrollSystemApp
             }
         }
         
-
-        static List<PayrollModel>? AllPayrollList = new List<PayrollModel>();
-        internal static async Task<List<PayrollModel>> GetPayrollList()
-        {
-            try
-            {
-                string savedPayrollList = await PostRequest("/noteTakerGet", PAYROLL_DB_CACHE_KEY, "");
-                if (!string.IsNullOrEmpty(savedPayrollList))
-                    AllPayrollList = JsonConvert.DeserializeObject<List<PayrollModel>>(savedPayrollList);
-                if (AllPayrollList == null) AllPayrollList = new List<PayrollModel>(); 
-                return AllPayrollList.Where(p => p.Organization == LoggedInUser?.Organization).ToList();
-            }
-            catch (Exception)
-            {
-                return new List<PayrollModel>();
-            }
-        }
+         
+        //internal static async Task<PayrollModel?> GetPayrollList(string selectedMonth, int selectedYear)
+        //{
+        //    try
+        //    {
+        //        string savedPayrollList = await PostRequest("/noteTakerGet", PAYROLL_DB_CACHE_KEY + "-" + selectedMonth + "-" + selectedYear, "");
+        //        return JsonConvert.DeserializeObject<PayrollModel?>(savedPayrollList);  
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return null;
+        //    }
+        //}
         internal static async Task<bool> AddUpdatePayroll(PayrollModel newPayroll)
         {
             try
-            {
-                if (AllPayrollList == null) return false;
-                var existPayroll = AllPayrollList.Where(p => p.payrollId == newPayroll.payrollId).FirstOrDefault();
-                if (existPayroll != null) AllPayrollList.Remove(existPayroll);  
-                else existPayroll = newPayroll; AllPayrollList.Add(existPayroll);
-
-                string mraw = JsonConvert.SerializeObject(AllPayrollList);
-                await PostRequest("/noteTakerSet", PAYROLL_DB_CACHE_KEY, mraw);
+            { 
+                string mraw = JsonConvert.SerializeObject(newPayroll);
+                await PostRequest("/noteTakerSet", PAYROLL_DB_CACHE_KEY + "-" + newPayroll.Month + "-" + newPayroll.Year, mraw);
                 ShowMessage("Payroll Updated Successfully"); return true;
             }
             catch (Exception)
@@ -272,22 +271,26 @@ namespace PayrollSystemApp
         internal static async Task<bool> DeletePayroll(PayrollModel delPayroll)
         {
             try
-            {
-                if (AllPayrollList == null) return false;
-                var existPayroll = AllPayrollList.Where(p => p.payrollId == delPayroll.payrollId).FirstOrDefault();
-                if (existPayroll != null) AllPayrollList.Remove(existPayroll);
-                else { ShowMessage("Payroll Not Found"); return false; }
-
-                string mraw = JsonConvert.SerializeObject(AllPayrollList);
-                await PostRequest("/noteTakerSet", PAYROLL_DB_CACHE_KEY, mraw);
+            {  
+                await PostRequest("/noteTakerSet", PAYROLL_DB_CACHE_KEY + "-" + delPayroll.Month + "-" + delPayroll.Year, "");
                 ShowMessage("Payroll Deleted Successfully"); return true;
             }
             catch (Exception)
             {
                 ShowMessage("Error Deleting Payroll"); return false;
             }
+        } 
+        internal static async Task<List<PayrollModel>> GetAllPayrollList()
+        {
+           List<PayrollModel> AllPayrolls= await  new FirebaseClass().GetAllPayrollList();
+            if (!LoggedInUser.isAdmin)
+                return AllPayrolls.Select(p => new PayrollModel() 
+                {  
+                    Employee = p.Employee.Where(p => p.UserId == LoggedInUser.UserId).ToList(),
+                    Month = p.Month, Year =p.Year, Organization = p.Organization, payrollId = p.payrollId
+                }).ToList();
+            return AllPayrolls.Where(p => p.Organization == LoggedInUser.Organization).ToList();  
         }
-
     }
     class FileModel
     {

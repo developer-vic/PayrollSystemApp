@@ -19,15 +19,15 @@ public partial class PayrollListPage : ContentPage
         vM.ShowLoading = true;
     }
 
-    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
-    {
-        colPayrollList.SelectedItem = (sender as HorizontalStackLayout)?.BindingContext;
-        colPayrollList.SelectedItem = null;
+    private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+    { 
+        PayrollModel? SelectedItem = (sender as ImageButton)?.BindingContext as PayrollModel;
+        VUtils.GetoPage(new PayrollAddEditPage(SelectedItem ?? new PayrollModel(), vM._Employees, true));
     }
     private void EditImageButton_Clicked(object sender, EventArgs e)
     {
         PayrollModel? SelectedItem = (sender as ImageButton)?.BindingContext as PayrollModel;
-        VUtils.GetoPage(new PayrollAddEditPage(SelectedItem ?? new PayrollModel(),  vM._Employees));
+        VUtils.GetoPage(new PayrollAddEditPage(SelectedItem ?? new PayrollModel(),  vM._Employees, false));
     }
     private void DeleteImageButton_Clicked(object sender, EventArgs e)
     {
@@ -56,7 +56,7 @@ public partial class PayrollListPage : ContentPage
         private void OnSearchTitle(string value)
         {
             if (!string.IsNullOrEmpty(value))
-                PayrollList = new ObservableCollection<PayrollModel>(FullPayrollList.Where(p => p.Employee.FullName.ToLower().Contains(searchTitle.ToLower())));
+                PayrollList = new ObservableCollection<PayrollModel>(FullPayrollList.Where(p => p.MonthYear.ToLower().Contains(searchTitle.ToLower())));
             else PayrollList = new ObservableCollection<PayrollModel>(FullPayrollList);
         }
 
@@ -67,7 +67,7 @@ public partial class PayrollListPage : ContentPage
         private async void InitializeData()
         {
             _Employees = await VUtils.GetEmployeeList();
-            FullPayrollList = await VUtils.GetPayrollList();
+            FullPayrollList = await VUtils.GetAllPayrollList();
             PayrollList = new ObservableCollection<PayrollModel>(FullPayrollList);
             TotalPayroll = "Total: " + FullPayrollList.Count(); ShowLoading = false;
         }
@@ -97,8 +97,7 @@ public partial class PayrollListPage : ContentPage
             bool canDel = await Application.Current.MainPage.DisplayAlert("Delete Confirmation", "Are you sure you want to delete?", "YES, DELETE", "NO, CLOSE");
             if (canDel)
             {
-                await VUtils.DeletePayroll(delPayroll);
-                ShowLoading = true;
+                await VUtils.DeletePayroll(delPayroll); ShowLoading = true;
             }
         }
     }

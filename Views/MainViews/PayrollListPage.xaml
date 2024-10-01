@@ -23,19 +23,19 @@
                     <Frame Margin="0,10" BackgroundColor="#E2DBF6" CornerRadius="12" Padding="10,5" HasShadow="False">
                         <Grid RowDefinitions="auto,auto" ColumnDefinitions="*,auto">
                             <HorizontalStackLayout Grid.Column="0" Padding="10,5">
-                                <HorizontalStackLayout.GestureRecognizers>
+                                <!--<HorizontalStackLayout.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                                </HorizontalStackLayout.GestureRecognizers>
-                                <Image Source="employed" WidthRequest="50" HeightRequest="50" Margin="-10" Aspect="AspectFit" />
+                                </HorizontalStackLayout.GestureRecognizers>-->
+                                <ImageButton Source="employed" WidthRequest="50" HeightRequest="50" Margin="-10" Aspect="AspectFit" Clicked="TapGestureRecognizer_Tapped" />
                                 <BoxView WidthRequest=".5" VerticalOptions="FillAndExpand" Color="#684C18" Margin="15,0,10,0"/>
                                 <VerticalStackLayout>
-                                    <Label Text="{Binding Employee.FullName}" TextColor="#6E4AD3" FontAttributes="Bold" FontSize="Default" />
-                                    <Label Text="{Binding NetSalary, StringFormat='{0:N2}'}" TextColor="#644F28" FontSize="Small" />
+                                    <Label Text="{Binding MonthYear}" TextColor="#6E4AD3" FontAttributes="Bold" FontSize="Default" />
+                                    <Label Text="{Binding TotalNetSalary, StringFormat='{0:N2}'}" TextColor="#644F28" FontSize="Small" />
                                 </VerticalStackLayout>
                             </HorizontalStackLayout>
                             <VerticalStackLayout Grid.Column="1" Spacing="10" VerticalOptions="Center" HorizontalOptions="EndAndExpand">
                                 <ImageButton Source="edit" HorizontalOptions="Center" VerticalOptions="Center" 
-                                               WidthRequest="30" HeightRequest="20" Clicked="EditImageButton_Clicked"/>
+                                             IsVisible="False" WidthRequest="30" HeightRequest="20" Clicked="EditImageButton_Clicked"/>
                                 <ImageButton Source="delete" HorizontalOptions="Center" VerticalOptions="Center" 
                                                WidthRequest="30" HeightRequest="20" Clicked="DeleteImageButton_Clicked"/>
                             </VerticalStackLayout>

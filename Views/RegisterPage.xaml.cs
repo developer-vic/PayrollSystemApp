@@ -84,7 +84,7 @@ public partial class RegisterPage : ContentPage
                     UserType = SelectedAccType,
                     UserId = VUtils.GetTransactionRef()
                 };
-                bool regSuccess = await VUtils.RegisterUser(newUser);
+                bool regSuccess = await VUtils.RegisterUser(newUser, true, true);
                 if (regSuccess) VUtils.GetoPage(new MainViews.DashboardPage(), true);
                 ShowLoading = false;
             }

@@ -63,7 +63,7 @@ public partial class EmployeeAddEditPage : ContentPage
                || string.IsNullOrEmpty(savingUser.FullName) || string.IsNullOrEmpty(savingUser.Phone) 
                || string.IsNullOrEmpty(savingUser.Position)) VUtils.ToastText("Pls fill in all fields");
             else if (!VUtils.IsValidEmailFormat(savingUser.Email)) VUtils.ToastText("Incorrect Email Format");
-            //else if (savingUser.Salary == 0) VUtils.ToastText("Incorrect Salary Format");
+            else if (savingUser.BasicSalary == 0) VUtils.ToastText("Incorrect Salary Format"); 
             else
             {
                 ShowLoading = true; bool isNew = string.IsNullOrEmpty(savingUser.UserId);

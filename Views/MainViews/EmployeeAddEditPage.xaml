@@ -16,15 +16,31 @@
                 <Entry Text="{Binding Employee.Phone}" Placeholder="Enter phone number" Keyboard="Telephone"
                        IsEnabled="{Binding FieldsEnabled}"/>
                 <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
-
-                <!--<Label Text="Salary" FontSize="Medium"/>
-                <Entry Text="{Binding Employee.Salary}" Placeholder="Enter salary" Keyboard="Numeric"
-                       IsEnabled="{Binding FieldsEnabled}"/>
-                <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />-->
-
+ 
+                
                 <Label Text="Position" FontSize="Medium"/>
                 <Entry Text="{Binding Employee.Position}" Placeholder="Enter position" 
                        IsEnabled="{Binding FieldsEnabled}"/>
+                <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
+
+                <Label Text="Basic Salary" FontSize="Medium"/>
+                <Entry x:Name="BasicSalaryEntry" Text="{Binding Employee.BasicSalary}" 
+        Placeholder="Enter basic salary" Keyboard="Numeric" IsEnabled="{Binding FieldsEnabled}"/>
+                <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
+
+                <Label Text="Overtime" FontSize="Medium"/>
+                <Entry x:Name="OvertimeEntry" Text="{Binding Employee.Overtime}" 
+        Placeholder="Enter overtime amount" Keyboard="Numeric" IsEnabled="{Binding FieldsEnabled}"/>
+                <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
+
+                <Label Text="Bonuses" FontSize="Medium"/>
+                <Entry x:Name="BonusesEntry" Text="{Binding Employee.Bonuses}" 
+        Placeholder="Enter bonuses" Keyboard="Numeric" IsEnabled="{Binding FieldsEnabled}"/>
+                <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
+
+                <Label Text="Deductions" FontSize="Medium"/>
+                <Entry x:Name="DeductionsEntry" Text="{Binding Employee.Deductions}" 
+        Placeholder="Enter deductions" Keyboard="Numeric" IsEnabled="{Binding FieldsEnabled}"/>
                 <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
 
                 <Label Text="Login Email" FontSize="Medium"/>
@@ -39,6 +55,7 @@
                     <ImageButton Source="{Binding PasswordToggleImage}" Command="{Binding MyCommand}" CommandParameter="toggle_pw" WidthRequest="30" BackgroundColor="White" HorizontalOptions="End" />
                 </StackLayout>
                 <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,30,20" HorizontalOptions="FillAndExpand" />
+
                 
                 <ActivityIndicator IsVisible="{Binding ShowLoading}" IsRunning="{Binding ShowLoading}" 
                        VerticalOptions="Center" HorizontalOptions="Center" Color="#37256A"/>
