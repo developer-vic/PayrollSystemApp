@@ -6,7 +6,7 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Padding="20">
-                <!-- Employee Form -->
+                <!-- Employee Form --> 
                 <Label Text="Full Name" FontSize="Medium"/>
                 <Entry Text="{Binding Employee.FullName}" Placeholder="Enter full name"
                        IsEnabled="{Binding FieldsEnabled}"/>
@@ -16,12 +16,18 @@
                 <Entry Text="{Binding Employee.Phone}" Placeholder="Enter phone number" Keyboard="Telephone"
                        IsEnabled="{Binding FieldsEnabled}"/>
                 <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
- 
-                
-                <Label Text="Position" FontSize="Medium"/>
-                <Entry Text="{Binding Employee.Position}" Placeholder="Enter position" 
+
+
+                <Label Text="Department" FontSize="Medium"/>
+                <Picker SelectedItem="{Binding Employee.Department}" ItemsSource="{Binding DepartmentList}"
                        IsEnabled="{Binding FieldsEnabled}"/>
                 <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
+                
+                <Label Text="Position" FontSize="Medium"/>
+                <Picker SelectedItem="{Binding Employee.Position}" ItemsSource="{Binding PositionList}"
+                       IsEnabled="{Binding FieldsEnabled}"/>
+                <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
+                
 
                 <Label Text="Basic Salary" FontSize="Medium"/>
                 <Entry x:Name="BasicSalaryEntry" Text="{Binding Employee.BasicSalary}" 

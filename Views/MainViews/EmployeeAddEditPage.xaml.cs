@@ -28,6 +28,9 @@ public partial class EmployeeAddEditPage : ContentPage
         public bool EmailEnabled { get; set; } = true;
         public bool FieldsEnabled { get; set; } = true;
         public string PageTitle { get; set; } = "Employee";
+        public string[] PositionList { get; set; } = ["Dean", "Sub dean", "HOD", "Lecturer", "Exam officer", "Lab technician ", "Secretary (dean)", "Secretary (HOD)"];
+        public string[] DepartmentList  { get; set; } = ["Computer Science Department", "Networking and Cloud Computing Depart", "Software and Web Development Department", "Artificial Intelligence Department", "Cybersecurity and Data Protection Department"];
+
         public ICommand? MyCommand { get; protected set; }
 
         public EmployeeAddEditVM(UserModel employee, bool justView = false)

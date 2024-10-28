@@ -16,6 +16,7 @@ namespace PayrollSystemApp.Controls
         public string Organization { get; set; } = "";
         public bool isAdmin { get=> UserType=="Employer"; } 
         public string Position { get; set; } = "";
+        public string Department { get; set; } = "";
         public double BasicSalary { get; set; }
         public double Overtime { get; set; }
         public double Bonuses { get; set; }
