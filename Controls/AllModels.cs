@@ -17,12 +17,12 @@ namespace PayrollSystemApp.Controls
         public bool isAdmin { get=> UserType=="Employer"; } 
         public string Position { get; set; } = "";
         public string Department { get; set; } = "";
-        public double BasicSalary { get; set; }
-        public double Overtime { get; set; }
-        public double Bonuses { get; set; }
-        public double Deductions { get; set; }
-        public double Extras => Overtime + Bonuses;
-        public double NetSalary => BasicSalary + Overtime + Bonuses - Deductions;
+        public double? BasicSalary { get; set; }
+        public double? Overtime { get; set; }
+        public double? Bonuses { get; set; }
+        public double? Deductions { get; set; }
+        public double? Extras => Overtime + Bonuses;
+        public double? NetSalary => BasicSalary + Overtime + Bonuses - Deductions;
     }
     public class PayrollModel
     {
@@ -32,7 +32,7 @@ namespace PayrollSystemApp.Controls
         public string Month { get; set; } = "";
         public int Year { get; set; }
         public string MonthYear => Month + " " + Year;
-        public double TotalNetSalary => Employee.Select(p=>p.NetSalary).Sum();
+        public double? TotalNetSalary => Employee.Select(p=>p.NetSalary).Sum();
     }
      
 }

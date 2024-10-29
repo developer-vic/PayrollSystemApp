@@ -19,12 +19,12 @@
 
 
                 <Label Text="Department" FontSize="Medium"/>
-                <Picker SelectedItem="{Binding Employee.Department}" ItemsSource="{Binding DepartmentList}"
+                <Picker ItemsSource="{Binding DepartmentList}" SelectedItem="{Binding Employee.Department, Mode=TwoWay}"
                        IsEnabled="{Binding FieldsEnabled}"/>
                 <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
                 
                 <Label Text="Position" FontSize="Medium"/>
-                <Picker SelectedItem="{Binding Employee.Position}" ItemsSource="{Binding PositionList}"
+                <Picker ItemsSource="{Binding PositionList}" SelectedItem="{Binding Employee.Position, Mode=TwoWay}"
                        IsEnabled="{Binding FieldsEnabled}"/>
                 <BoxView Color="#AAAAAA" HeightRequest="1" Margin="0,-6,0,20" HorizontalOptions="FillAndExpand" />
                 

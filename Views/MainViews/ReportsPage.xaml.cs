@@ -116,10 +116,10 @@ public partial class ReportsPage : ContentPage
 
             Reports = new ObservableCollection<UserModel>(ReportsLoaded);
             TotalPayroll = "Total Payroll Report: " + ReportsLoaded.Count();
-            TotalSalary = "Total Salary: " + ReportsLoaded.Sum(p => p.BasicSalary).ToString("N2");
-            TotalExtra = "Total Extras: " + ReportsLoaded.Sum(p => p.Extras).ToString("N2");
-            TotalDeduction = "Total Deduction: " + ReportsLoaded.Sum(p => p.Deductions).ToString("N2");
-            TotalNetSalary = "Total Net Salary: " + ReportsLoaded.Sum(p => p.NetSalary).ToString("N2"); 
+            TotalSalary = "Total Salary: " + ReportsLoaded.Sum(p => p.BasicSalary)?.ToString("N2");
+            TotalExtra = "Total Extras: " + ReportsLoaded.Sum(p => p.Extras)?.ToString("N2");
+            TotalDeduction = "Total Deduction: " + ReportsLoaded.Sum(p => p.Deductions)?.ToString("N2");
+            TotalNetSalary = "Total Net Salary: " + ReportsLoaded.Sum(p => p.NetSalary)?.ToString("N2"); 
         }
 
         public void DownloadReport()
