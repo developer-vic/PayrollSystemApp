@@ -90,8 +90,8 @@ public partial class ReportsPage : ContentPage
                     case "generate":
                         GenerateReport();
                         break;
-                    case "download":
-                        DownloadReport();
+                    case "print":
+                        PrintReport();
                         break;
                 }
             });
@@ -122,21 +122,102 @@ public partial class ReportsPage : ContentPage
             TotalNetSalary = "Total Net Salary: " + ReportsLoaded.Sum(p => p.NetSalary)?.ToString("N2"); 
         }
 
-        public void DownloadReport()
+        public async void PrintReport()
         {
             try
             {
-                var filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "PayrollReport_All.pdf");
+                string htmlContent = GenerateHtmlContent();
+                var filePath = Path.Combine(FileSystem.Current.AppDataDirectory, "payroll_report.html");
+                File.WriteAllText(filePath, htmlContent);
 
-                //GeneratePdf(filePath);
-
-                //await ShareFile(filePath);
+                await Launcher.Default.OpenAsync(new OpenFileRequest
+                {
+                    File = new ReadOnlyFile(filePath)
+                }); 
             }
             catch (Exception ex)
             {
                 VUtils.ToastText(ex.Message);
             }
         }
+
+        public string GenerateHtmlContent()
+        { 
+            string htmlContent = $@"
+    <html>
+    <head>
+        <title>Payroll Report</title>
+        <style>
+            body {{ font-family: Arial, sans-serif; margin: 20px; }}
+            h1, h2 {{ text-align: center; color: #37256A; }}
+            table {{ width: 100%; border-collapse: collapse; margin: 20px 0; }}
+            th, td {{ border: 1px solid #ddd; padding: 8px; text-align: left; }}
+            th {{ background-color: #6E4AD3; color: white; }}
+            tfoot td {{ font-weight: bold; }}
+            .footer {{ text-align: right; margin-top: 20px; }}
+        </style>
+    </head>
+    <body>
+        <h1>Payroll Report</h1>
+        <h2>{SelectedMonth} {SelectedYear}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Position</th>
+                    <th>Basic Salary</th>
+                    <th>Extras</th>
+                    <th>Deductions</th>
+                    <th>Net Salary</th>
+                </tr>
+            </thead>
+            <tbody>";
+             
+            foreach (var report in Reports)
+            {
+                htmlContent += $@"
+                <tr>
+                    <td>{report.FullName}</td>
+                    <td>{report.Position}</td>
+                    <td>{report.BasicSalary:N2}</td>
+                    <td>{report.Extras:N2}</td>
+                    <td>{report.Deductions:N2}</td>
+                    <td>{report.NetSalary:N2}</td>
+                </tr>";
+            }
+
+            // Footer Section
+            var totalSalary = Reports.Sum(r => r.BasicSalary);
+            var totalExtras = Reports.Sum(r => r.Extras);
+            var totalDeductions = Reports.Sum(r => r.Deductions);
+            var totalNetSalary = Reports.Sum(r => r.NetSalary);
+
+            htmlContent += $@"
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan='2'>Totals</td>
+                    <td>{totalSalary:N2}</td>
+                    <td>{totalExtras:N2}</td>
+                    <td>{totalDeductions:N2}</td>
+                    <td>{totalNetSalary:N2}</td>
+                </tr>
+            </tfoot>
+        </table>
+        <div class='footer'>
+            <p>Total Salary: {totalSalary:N2}</p>
+            <p>Total Extras: {totalExtras:N2}</p>
+            <p>Total Deductions: {totalDeductions:N2}</p>
+            <p>Total Net Salary: {totalNetSalary:N2}</p>
+        </div>
+    <script>
+        window.onload = function() {{ window.print(); }};
+    </script>
+    </body>
+    </html>"; 
+            return htmlContent;
+        }
+
 
         private async Task ShareFile(string filePath)
         {

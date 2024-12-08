@@ -45,5 +45,9 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
         
+        <Button ImageSource="download" BackgroundColor="White" BorderWidth="1" BorderColor="#6E4AD3" 
+ CornerRadius="10" Text="Download/Print" TextColor="#6E4AD3" FontAttributes="Bold" 
+ FontSize="16" Command="{Binding MyCommand}" CommandParameter="print" Margin="0,10"/>
+        
     </VerticalStackLayout>
 </ContentPage>

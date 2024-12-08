@@ -1,5 +1,5 @@
 namespace PayrollSystemApp.Views;
-
+ 
 public partial class WelcomePage : ContentPage
 {
 	public WelcomePage()
@@ -8,9 +8,10 @@ public partial class WelcomePage : ContentPage
 	}
 
     void btnLogin_Clicked(System.Object sender, System.EventArgs e)
-    {
+    { 
         VUtils.GetoPage(new LoginPage(), true); 
     }
+     
     void btnRegister_Clicked(System.Object sender, System.EventArgs e)
     {
         VUtils.GetoPage(new RegisterPage(), true); 
